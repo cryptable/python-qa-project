@@ -1,9 +1,7 @@
-
 class Fibonacci:
-
     def _fibo(self, level, max, verbose=False):
-        result1 = 1;
-        result2 = 1;
+        result1 = 1
+        result2 = 1
         while True:
             if level != -1 and level == 0:
                 return result2
@@ -14,35 +12,57 @@ class Fibonacci:
             level -= 1
 
     def _output_error_xml(self, value, error_msg):
-        return '<fibonacci><result>{}</result><error-msg>{}</error-msg></fibonacci>'.format(value, error_msg)
+        return "<fibonacci><result>{}</result><error-msg>{}</error-msg></fibonacci>".format(
+            value, error_msg
+        )
 
     def _output_error_json(self, value, error_msg):
         return '{{"result":{},"error-msg>":"{}"}}'.format(value, error_msg)
 
     def _output_value_xml(self, value):
-        return '<fibonacci><result>{}</result></fibonacci>'.format(value)
+        return "<fibonacci><result>{}</result></fibonacci>".format(value)
 
     def _output_value_json(self, value):
         return '{{"result":{}}}'.format(value)
 
     def _output(self, json_format, value, error_msg=None):
         if error_msg:
-            return  self._output_error_json(value, error_msg) if json_format else self._output_error_xml(value, error_msg)
-        return self._output_value_json(value) if json_format else self._output_value_xml(value)
+            return (
+                self._output_error_json(value, error_msg)
+                if json_format
+                else self._output_error_xml(value, error_msg)
+            )
+        return (
+            self._output_value_json(value)
+            if json_format
+            else self._output_value_xml(value)
+        )
 
     def process(self, args):
         if args.level == -1 and args.max_value == -1:
-            return self._output(args.json, -1, error_msg="Missing arguments, 'level' or 'max-value' is obligatory")
+            return self._output(
+                args.json,
+                -1,
+                error_msg="Missing arguments, 'level' or 'max-value' is obligatory",
+            )
         result = self._fibo(args.level, args.max_value, args.verbose)
         return self._output(args.json, result)
 
     def __init__(self, parent_parser):
         subparser = parent_parser.add_parser("fibo")
         subparser.add_argument(
-            "-l", "--level", type=int, default=-1, help="Number steps for Fibonacci to take"
+            "-l",
+            "--level",
+            type=int,
+            default=-1,
+            help="Number steps for Fibonacci to take",
         )
         subparser.add_argument(
-            "-m", "--max-value", type=int, default=-1, help="Run steps for Fibonacci as long as its less then 'max-value'"
+            "-m",
+            "--max-value",
+            type=int,
+            default=-1,
+            help="Run steps for Fibonacci as long as its less then 'max-value'",
         )
         subparser.add_argument(
             "-v",
