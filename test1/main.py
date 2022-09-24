@@ -1,7 +1,7 @@
 """Main code for test1 CLI
 
-This module is the basis of the CLI. It only parser arguments and execute the connected function to the parser. The 
-parameters and function connection is done in the submodules. 
+This module is the basis of the CLI. It only parser arguments and execute the connected function to the parser. The parameters and function connection
+ is done in the submodules.
 
 """
 import argparse

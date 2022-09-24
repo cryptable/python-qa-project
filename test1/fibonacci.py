@@ -10,6 +10,10 @@ def _fibo(level, max, verbose=False):
 
     Calculates the fibonacci series according to its input parameters
 
+    Examples:
+        >>> _fibo(5, -1)
+        13
+
     :param level: How many steps does fibo function needs to take.
     :param max: Maximum value to reach
     :param verbose: Verbose output
@@ -96,11 +100,11 @@ class Fibonacci:
     def _process(self, args):
         """calculate the Fibonacci number
 
-        This process will validate the arguments, calulate Fibonacci number and return the result in the requested
-        format.
+        This process will validate the arguments, calulate Fibonacci number and return
+        the result in the requested format.
 
-        :param args:
-        :return:
+        :param args: arguments initialized in the constructor will be injected.
+        :return: Returns a XML or JSON string
         """
         if args.level == -1 and args.max_value == -1:
             return _output(
@@ -114,9 +118,10 @@ class Fibonacci:
     def __init__(self, parent_parser):
         """constructor
 
-        Initializes the Fibonacci class where we add the necessary arguments to parse by the argument parser
+        Initializes the Fibonacci class where we add the necessary arguments to parse by
+        the argument parser
 
-        :param parent_parser:
+        :param parent_parser: parent argument parser of test1 application.
         """
         subparser = parent_parser.add_parser("fibo")
         subparser.add_argument(
