@@ -1,54 +1,123 @@
-class Fibonacci:
-    def _fibo(self, level, max, verbose=False):
-        result1 = 1
-        result2 = 1
-        while True:
-            if level != -1 and level == 0:
-                return result2
-            if max != -1 and result2 > max:
-                return result1
-            result2 = result1 + result2
-            result1 = result2 - result1
-            level -= 1
+"""fibonacci module
 
-    def _output_error_xml(self, value, error_msg):
-        return "<fibonacci><result>{}</result><error-msg>{}</error-msg></fibonacci>".format(
-            value, error_msg
-        )
+This module contains the implementation of the Fibonacci class
 
-    def _output_error_json(self, value, error_msg):
-        return '{{"result":{},"error-msg>":"{}"}}'.format(value, error_msg)
+"""
 
-    def _output_value_xml(self, value):
-        return "<fibonacci><result>{}</result></fibonacci>".format(value)
 
-    def _output_value_json(self, value):
-        return '{{"result":{}}}'.format(value)
+def _fibo(level, max, verbose=False):
+    """the fibonacci calculation function
 
-    def _output(self, json_format, value, error_msg=None):
-        if error_msg:
-            return (
-                self._output_error_json(value, error_msg)
-                if json_format
-                else self._output_error_xml(value, error_msg)
-            )
+    Calculates the fibonacci series according to its input parameters
+
+    :param level: How many steps does fibo function needs to take.
+    :param max: Maximum value to reach
+    :param verbose: Verbose output
+    :return: the fibonacci number
+    """
+    result1 = 1
+    result2 = 1
+    while True:
+        if level != -1 and level == 0:
+            return result2
+        if max != -1 and result2 > max:
+            return result1
+        result2 = result1 + result2
+        result1 = result2 - result1
+        level -= 1
+
+
+def _output_error_xml(value, error_msg):
+    """show error message in xml
+
+    :param value: Error code
+    :param error_msg: descriptive error message
+    :return:
+    """
+    return "<fibonacci><result>{}</result><error-msg>{}</error-msg></fibonacci>".format(
+        value, error_msg
+    )
+
+
+def _output_error_json(value, error_msg):
+    """show error message in json
+
+    :param value: Error code
+    :param error_msg: descriptive error message
+    :return:
+    """
+    return '{{"result":{},"error-msg>":"{}"}}'.format(value, error_msg)
+
+
+def _output_value_xml(value):
+    """show result in xml
+
+    :param value: Fibonacci result
+    :return:
+    """
+    return "<fibonacci><result>{}</result></fibonacci>".format(value)
+
+
+def _output_value_json(value):
+    """show result in json
+
+    :param value: Fibonacci result
+    :return:
+    """
+    return '{{"result":{}}}'.format(value)
+
+
+def _output(json_format, value, error_msg=None):
+    """output result
+
+    According to the parameters the output will be an XML or JSON result.
+
+    :param json_format: True/False to show JSON otherwise it is XML.
+    :param value: value of Fibonacci or error code when error_msg is present
+    :param error_msg: a descriptive error message
+    :return: string with XML or JSON
+    """
+    if error_msg:
         return (
-            self._output_value_json(value)
+            _output_error_json(value, error_msg)
             if json_format
-            else self._output_value_xml(value)
+            else _output_error_xml(value, error_msg)
         )
+    return _output_value_json(value) if json_format else _output_value_xml(value)
 
-    def process(self, args):
+
+class Fibonacci:
+    """Fibonacci class
+
+    Fibonacci class contains the business logic for the fibonacci commandline tool
+
+    """
+
+    def _process(self, args):
+        """calculate the Fibonacci number
+
+        This process will validate the arguments, calulate Fibonacci number and return the result in the requested
+        format.
+
+        :param args:
+        :return:
+        """
         if args.level == -1 and args.max_value == -1:
-            return self._output(
+            return _output(
                 args.json,
                 -1,
                 error_msg="Missing arguments, 'level' or 'max-value' is obligatory",
             )
-        result = self._fibo(args.level, args.max_value, args.verbose)
-        return self._output(args.json, result)
+        result = _fibo(args.level, args.max_value, args.verbose)
+        return _output(args.json, result)
 
     def __init__(self, parent_parser):
+        """constructor
+
+        Initializes the Fibonacci class where we add the necessary arguments to parse by the argument parser
+
+        :param parent_parser:
+        """
         subparser = parent_parser.add_parser("fibo")
         subparser.add_argument(
             "-l",
@@ -82,4 +151,4 @@ class Fibonacci:
             action="store_true",
             help="Return xml result",
         )
-        subparser.set_defaults(func=self.process)
+        subparser.set_defaults(func=self._process)
