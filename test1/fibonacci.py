@@ -1,4 +1,4 @@
-"""fibonacci module
+"""fibonacci module.
 
 This module contains the implementation of the Fibonacci class
 
@@ -6,11 +6,11 @@ This module contains the implementation of the Fibonacci class
 
 
 def _fibo(level, max, verbose=False):
-    """the fibonacci calculation function
+    """the fibonacci calculation function.
 
     Calculates the fibonacci series according to its input parameters
 
-    Examples:
+    Example:
         >>> _fibo(5, -1)
         13
 
@@ -18,6 +18,7 @@ def _fibo(level, max, verbose=False):
     :param max: Maximum value to reach
     :param verbose: Verbose output
     :return: the fibonacci number
+
     """
     result1 = 1
     result2 = 1
@@ -32,11 +33,12 @@ def _fibo(level, max, verbose=False):
 
 
 def _output_error_xml(value, error_msg):
-    """show error message in xml
+    """show error message in xml.
 
     :param value: Error code
     :param error_msg: descriptive error message
     :return:
+
     """
     return "<fibonacci><result>{}</result><error-msg>{}</error-msg></fibonacci>".format(
         value, error_msg
@@ -44,35 +46,38 @@ def _output_error_xml(value, error_msg):
 
 
 def _output_error_json(value, error_msg):
-    """show error message in json
+    """show error message in json.
 
     :param value: Error code
     :param error_msg: descriptive error message
     :return:
+
     """
     return '{{"result":{},"error-msg>":"{}"}}'.format(value, error_msg)
 
 
 def _output_value_xml(value):
-    """show result in xml
+    """show result in xml.
 
     :param value: Fibonacci result
     :return:
+
     """
     return "<fibonacci><result>{}</result></fibonacci>".format(value)
 
 
 def _output_value_json(value):
-    """show result in json
+    """show result in json.
 
     :param value: Fibonacci result
     :return:
+
     """
     return '{{"result":{}}}'.format(value)
 
 
 def _output(json_format, value, error_msg=None):
-    """output result
+    """output result.
 
     According to the parameters the output will be an XML or JSON result.
 
@@ -80,6 +85,7 @@ def _output(json_format, value, error_msg=None):
     :param value: value of Fibonacci or error code when error_msg is present
     :param error_msg: a descriptive error message
     :return: string with XML or JSON
+
     """
     if error_msg:
         return (
@@ -91,20 +97,22 @@ def _output(json_format, value, error_msg=None):
 
 
 class Fibonacci:
-    """Fibonacci class
+    """Fibonacci class.
 
-    Fibonacci class contains the business logic for the fibonacci commandline tool
+    Fibonacci class contains the business logic for the fibonacci
+    commandline tool
 
     """
 
     def _process(self, args):
-        """calculate the Fibonacci number
+        """calculate the Fibonacci number.
 
         This process will validate the arguments, calulate Fibonacci number and return
         the result in the requested format.
 
         :param args: arguments initialized in the constructor will be injected.
         :return: Returns a XML or JSON string
+
         """
         if args.level == -1 and args.max_value == -1:
             return _output(
@@ -116,12 +124,13 @@ class Fibonacci:
         return _output(args.json, result)
 
     def __init__(self, parent_parser):
-        """constructor
+        """constructor.
 
         Initializes the Fibonacci class where we add the necessary arguments to parse by
         the argument parser
 
         :param parent_parser: parent argument parser of test1 application.
+
         """
         subparser = parent_parser.add_parser("fibo")
         subparser.add_argument(

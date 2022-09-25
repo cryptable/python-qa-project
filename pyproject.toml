@@ -13,8 +13,9 @@ pylama = "^8.4.1"
 black = "^22.8.0"
 pytest-cov = "^3.0.0"
 interrogate="^1.5.0"
-sphinx="^5.1.1"
+sphinx="^5.2.0"
 sphinx-rtd-theme="^1.0.0"
+docformatter="^1.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -45,3 +46,8 @@ color = true
 omit-covered-files = false
 # generate-badge = "."
 # badge-format = "svg"
+
+[tool.docformatter]
+recursive = true
+blank = true
+in-place = true
